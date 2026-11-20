@@ -19,19 +19,14 @@ public class Futbolista implements Runnable {
     public Futbolista(String nom){
         this.nom = nom;
     }
-    //     public static synchronized void reiniciarGolsTotals() {
-    //     golsTotals = 0;
-    // }
 
-    private static synchronized void sumarGols(int gols) {
+    private static void sumarGols(int gols) {
         golsTotals += gols;
     }
 
-    public static synchronized int getGolsTotals() {
+    public static int getGolsTotals() {
         return golsTotals;
     }
-
-    //List<String> noms = new ArrayList<>(); 
 
     @Override
     public void run() {
