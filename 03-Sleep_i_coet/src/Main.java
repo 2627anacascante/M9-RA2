@@ -15,6 +15,8 @@ public class Main {
             name2.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
+            Thread.currentThread().interrupt();
+            return;
         }
     
 }

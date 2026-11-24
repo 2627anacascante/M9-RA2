@@ -1,5 +1,8 @@
 import java.sql.Time;
 import java.time.LocalDateTime;
+import static java.lang.Thread.sleep;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class DormAleatori implements Runnable {
 
@@ -18,16 +21,16 @@ public class DormAleatori implements Runnable {
         this.nom = nom;
     }
 
-    long num_iteracio = System.currentTimeMillis()/1000;
+    long num_iteracio = System.currentTimeMillis();
 
-    long interval_aleatori = Time.sleep(System.currentTimeMillis());
+    long interval_aleatori = ThreadLocalRandom.current().nextLong(1000, 5001);
     
     @Override 
     public void run() {
         for (int i = 0; i<10; i++){
-            System.out.println( nom + "(" + i + ")" + " a dormir " + num_iteracio + " ms total " + System.currentTimeMillis() );
+            System.out.println( nom + "(" + i + ")" + " a dormir " + interval_aleatori + " ms total " + num_iteracio );
         try {
-            Thread.sleep(1000);
+            Thread.sleep(interval_aleatori);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
