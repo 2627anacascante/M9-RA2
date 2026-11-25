@@ -17,11 +17,9 @@ public class Motor implements Runnable {
 
     @Override 
     public void run() {
+
         while (potencia_actual != potencia_objectiu) {
-            try {
-                Thread.sleep(ThreadLocalRandom.current().nextLong(1000, 2001));
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
+            if (!espera()) {
                 return;
             }
 
@@ -40,8 +38,32 @@ public class Motor implements Runnable {
             String accio = potencia_actual == objectiu
                 ? "FerRes"
                 : incrementa ? "Incre." : "Decre.";
+
+            
             System.out.println("Motor " + numero + ": " + accio
                 + " Objectiu: " + objectiu + " Actual: " + potencia_actual);
+        }
+
+        potencia_objectiu = 0;
+        while (potencia_actual > 0) {
+            if (!espera()) {
+                return;
+            }
+
+            potencia_actual--;
+            System.out.println("Motor " + numero + ": Decre."
+                + " Objectiu: 0 Actual: " + potencia_actual);
+        }
+    }
+
+    private boolean espera() {
+        try {
+            Thread.sleep(ThreadLocalRandom.current().nextLong(1000, 2001));
+            
+            return true;
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            return false;
         }
     }
 }

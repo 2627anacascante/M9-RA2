@@ -18,27 +18,31 @@ public class Coet {
                     motor4.setPotencia(p);
                 }
 
+        private void executaMotors() throws InterruptedException {
+            Thread[] fils = {
+                new Thread(motor1),
+                new Thread(motor2),
+                new Thread(motor3),
+                new Thread(motor4)
+            };
+
+            for (Thread fil : fils) {
+                fil.start();
+            }
+            for (Thread fil : fils) {
+                fil.join();
+            }
+        }
+
         public static void main(String[] args) {
             Coet coet = new Coet();
-            coet.passaAPotencia(7);
-
-            Thread m1 = new Thread(coet.motor1);
-            Thread m2 = new Thread(coet.motor2);
-            Thread m3 = new Thread(coet.motor3);
-            Thread m4 = new Thread(coet.motor4);   
-            
-            m1.start();
-            m2.start();
-            m3.start();
-            m4.start();
 
         try {
-            m1.join();
-            m2.join();
-            m3.join();
-            m4.join();
+            for (int p = 7; p >= 0; p--) {
+                coet.passaAPotencia(p);
+                coet.executaMotors();
+            }
         } catch (InterruptedException e) {
-            e.printStackTrace();
             Thread.currentThread().interrupt();
             return;
         }
