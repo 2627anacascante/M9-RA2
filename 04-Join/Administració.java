@@ -39,7 +39,7 @@ public class Administració {
 
         for (Treballador ciutadà : ciutadans) {
             System.out.printf("Ciutada: %d -> edat: %.0f / total: %.2f%n",
-                    ciutadà.getCiutadà(), edat_fi_treball, ciutadà.getCobrat());
+                    ciutadà.getCiutadà(), ciutadà.getEdat(), ciutadà.getCobrat());
         }
     }
 }

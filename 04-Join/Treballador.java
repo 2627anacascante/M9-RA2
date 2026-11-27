@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class Treballador implements Runnable {
 
     private final int ciutadà;
@@ -11,6 +13,8 @@ public class Treballador implements Runnable {
     public double edat_actual;
 
     public float cobrat;
+
+    Random rnd = new Random();
 
     public Treballador(int ciutadà, double sou_anual_brut, double edat_inici_treball, 
         double edat_fi_treball, double edat_actual, float cobrat){
@@ -30,7 +34,7 @@ public class Treballador implements Runnable {
         return ciutadà;
     }
 
-    public double getEdat_actual() {
+    public double getEdat() {
         return edat_actual;
     }
 
@@ -49,10 +53,19 @@ public class Treballador implements Runnable {
 
     @Override 
     public void run() {
+        long sleep = 1000L + rnd.nextInt(2000);
+        try {
+            Thread.sleep(sleep);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            return;
+        }
+
         for (double edat = edat_inici_treball; edat < edat_fi_treball; edat++) {
             cobrat += cobratNet(sou_anual_brut);
         }
 
+        edat_actual += edat_fi_treball;
     }
     
 }
