@@ -30,34 +30,27 @@ public class Treballador implements Runnable {
         return ciutadà;
     }
 
-    public float totalCobrat(){
-       float total = 0.0f;
-       total += getCobrat();
-       return total; 
-    }
-
     public double getEdat_actual() {
         return edat_actual;
     }
 
     public float cobra(double sou_anual_brut){
-        
-    float estalvis = (float) (totalCobrat() + (totalCobrat()/ 12.0));
-
-    return estalvis;
+        return (float) (sou_anual_brut + sou_anual_brut / 12.0);
     }
 
     public float paga(double sou_anual_brut){
+        return (float) (sou_anual_brut * 0.24);
+    }
 
-    float impostos = (float) (totalCobrat() - (totalCobrat()* 0.24));
-    
-    return impostos;
+    public float cobratNet(double sou_anual_brut) {
+        float souBrutAmbPagaExtra = cobra(sou_anual_brut);
+        return souBrutAmbPagaExtra - paga(souBrutAmbPagaExtra);
     }
 
     @Override 
     public void run() {
         for (double edat = edat_inici_treball; edat < edat_fi_treball; edat++) {
-            cobrat += (float) (sou_anual_brut * 0.76);
+            cobrat += cobratNet(sou_anual_brut);
         }
 
     }
