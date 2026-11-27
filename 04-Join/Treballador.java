@@ -1,7 +1,7 @@
-import java.util.Random;
-
 public class Treballador implements Runnable {
 
+    private final int ciutadà;
+    
     public double sou_anual_brut;
 
     public double edat_inici_treball;
@@ -12,9 +12,9 @@ public class Treballador implements Runnable {
 
     public float cobrat;
 
-    Random rnd = new Random();
-
-    public Treballador(double sou_anual_brut, double edat_inici_treball, double edat_fi_treball, double edat_actual, float cobrat){
+    public Treballador(int ciutadà, double sou_anual_brut, double edat_inici_treball, 
+        double edat_fi_treball, double edat_actual, float cobrat){
+        this.ciutadà = ciutadà;
         this.sou_anual_brut = sou_anual_brut;
         this.edat_inici_treball = edat_inici_treball;
         this.edat_fi_treball = edat_fi_treball;
@@ -24,6 +24,10 @@ public class Treballador implements Runnable {
 
     public float getCobrat() {
         return cobrat;
+    }
+
+    public int getCiutadà() {
+        return ciutadà;
     }
 
     public float totalCobrat(){
@@ -50,28 +54,12 @@ public class Treballador implements Runnable {
     return impostos;
     }
 
-    public float cobratNet(double sou_anual_brut){
-
-    float sou_net = (float) (cobra(sou_anual_brut)-paga(sou_anual_brut));
-
-    return sou_net;
-    }
-
     @Override 
     public void run() {
-    
-    for (double i = edat_inici_treball; i<edat_fi_treball; i++ ){        
-    cobrat += (float) (sou_anual_brut * 0.76);
-    System.out.printf("Ciutada: %.0f -> edat: %.0f / total: %.2f%n",
-            i, edat_fi_treball, cobrat);
-    long esperaMs = 1000 + rnd.nextInt(2000);
-            try {
-                Thread.sleep(esperaMs);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                return;
-            }
+        for (double edat = edat_inici_treball; edat < edat_fi_treball; edat++) {
+            cobrat += (float) (sou_anual_brut * 0.76);
         }
+
     }
     
 }
